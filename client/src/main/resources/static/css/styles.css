@@ -1,0 +1,208 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+    font-weight: 400;
+    padding: 0;
+}
+
+main {
+    max-width: 1440px;
+    margin: 0 auto;
+    background-color: #eaeaea;
+}
+
+section {
+    padding: 80px;
+    min-height: 500px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.container h1 {
+    font-size: 40px;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-weight: 700;
+    font-family: "Oswald";
+    text-align: center;
+}
+
+.container p {
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 400;
+    font-family: "Montserrat";
+    text-align: center;
+    max-width: 70%;
+    margin: 0 auto;
+    line-height: 1.3;
+    margin-bottom: 30px;
+
+}
+
+/* navigation */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #005380;
+    z-index: 10;
+}
+
+nav {
+    max-width: 1440px;
+    font-size: 40px;
+    margin: 0 auto;
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-weight: 400;
+    font-family: "Oswald";
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+nav ul li {
+    margin: 0px;
+    align-content: center;
+    padding: 20px;
+}
+
+nav ul li:hover{
+    background-color: #2A8CC1;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+
+}
+
+
+
+h1 {
+   font-size: 75px;
+   text-transform: uppercase;
+   color: #000;
+   font-weight: 700;
+   font-family: "Oswald";
+   text-align: center;
+}
+
+form {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 1em;
+    background: #fff;
+    border-radius: 1em;
+    box-shadow: 0 0 1em #ccc;
+}
+
+div {
+    margin-bottom: 1em;
+}
+
+label {
+    margin-bottom: .5em;
+    color: #333333;
+    display: block;
+}
+
+input {
+    border: 1px solid #CCCCCC;
+    padding: .5em;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 0.7em;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: .3em;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.hero {
+    margin-top: 100px;
+    background-image: url('../images/hero.jpg');
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.hero .container {
+    width: 50%;
+}
+
+.hero h1 {
+    text-align: left;
+    text-transform: capitalize;
+    font-size: 125px;
+    font-weight: 400;
+    font-family: "Oswald";
+}
+
+.hero p {
+    font-size: 30px;
+    font-weight: 400;
+    text-align: left;
+    margin: 0;
+}
+
+.hero button {
+    width: 322px;
+    height: 65px;
+    border-radius: 5px;
+    background-color: #e8631c;
+    color: #fff;
+    font-size: 29px;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-family: "Oswald";
+    text-align: center;
+}
