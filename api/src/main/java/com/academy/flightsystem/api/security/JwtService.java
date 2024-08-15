@@ -12,6 +12,11 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.function.Function;
 
+
+/**
+ * JwtService is responsible for generating, validating, and extracting information
+ * from JSON Web Tokens (JWTs). It handles core operations lie creating, extracting claims, and validating tokens against user details.
+ */
 @Service
 public class JwtService {
 
@@ -20,22 +25,6 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    public String extractUsername(String token){
-        return extractClaim(token, Claims::getSubject);
-    }
-
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
-        Claims claims = getAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    private Claims getAllClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
 
     public String generateToken(String username){
         return buildToken(username);
@@ -53,6 +42,23 @@ public class JwtService {
     private SecretKey getSigningKey(){
         byte[] keyBytes = Decoders.BASE64.decode(key);
         return  Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public String extractUsername(String token){
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
+        Claims claims = getAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
+    private Claims getAllClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     public long getExpirationTime(){

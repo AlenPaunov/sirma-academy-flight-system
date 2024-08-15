@@ -16,6 +16,10 @@ public class UserService {
     private RestTemplate restTemplate;
 
     public void register(User user){
-       restTemplate.postForObject(backendApiUrl + "/users/register", user,User.class);
+       restTemplate.postForObject(backendApiUrl + "/auth/register", user,User.class);
+    }
+
+    public void login(User user) {
+        restTemplate.postForObject(backendApiUrl + "/auth/login", user,User.class);
     }
 }

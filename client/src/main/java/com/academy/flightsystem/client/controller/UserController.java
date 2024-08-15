@@ -41,6 +41,19 @@ public class UserController {
         return "login";
     }
 
+    @PostMapping("/login")
+    // TODO add error and logout
+    public String login(@ModelAttribute User user, Model model){
+        try {
+            service.login(user);
+            return "redirect:/";
+        } catch (Exception e) {
+            model.addAttribute("user", user);
+            model.addAttribute("error", "Error occurred during login");
+            return "login";
+        }
+    }
+
 
 
 

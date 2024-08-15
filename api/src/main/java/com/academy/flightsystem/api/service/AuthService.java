@@ -1,5 +1,6 @@
 package com.academy.flightsystem.api.service;
 
+import com.academy.flightsystem.api.model.LoginResponse;
 import com.academy.flightsystem.api.model.UserInfo;
 import com.academy.flightsystem.api.model.dto.LoginUserDto;
 import com.academy.flightsystem.api.model.dto.RegisterUserDto;
@@ -28,23 +29,31 @@ public class AuthService {
     @Autowired
     private JwtService jwtService;
 
+    /**
+     * Registers a new user in the system by encoding their password and saving
+     * their information in the database via the repo.
+     */
     public UserInfo register(RegisterUserDto userDto){
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername(userDto.getUsername());
         userInfo.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
         return userRepository.save(userInfo);
     }
 
-    // LoginResponse(token, user)
 
-    public String login(LoginUserDto userDto){
+    /**
+     * Authenticates a user based on their username and password, generates a JWT token if the
+     * authentication is successful, and returns the token along with the username
+     */
+    public LoginResponse login(LoginUserDto userDto){
+        // Authenticate the user and generate a JWT token using their username
+        String token = jwtService.generateToken(authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(userDto.getUsername(),userDto.getPassword())).getPrincipal().toString());
+        UserInfo user = userRepository.findByUsername(userDto.getUsername()).orElseThrow();
 
-
-        var token = jwtService.generateToken(authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(userDto.getUsername(),userDto.getPassword())).getPrincipal().toString());
-        var user = userRepository.findByUsername(userDto.getUsername()).orElseThrow();
-        return  token +" | " +  user.getUsername();
+        return new LoginResponse().setToken(token).setExpiresIn(jwtService.getExpirationTime()).setUsername(user.getUsername());
 
     }
+
+    // LoginResponse(jwt, user)
 
 }

@@ -21,4 +21,8 @@ public class UserController {
         return new ArrayList<>();
     }
 
+    @GetMapping("profile")
+    public void getProfile(){
+    }
+
 }

@@ -19,6 +19,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
+/**
+ * Configuration class for setting up Spring Security in the application.
+ * It defines the security filter chain, authentication providers, password
+ * encoding, and method-level security.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -30,22 +36,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/login", "/auth/register", "/").permitAll()
-//                        .requestMatchers("/auth/admin").hasRole("ADMIN")
-                        .anyRequest().authenticated()
-                ).authenticationProvider(authenticationProvider())
-                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorize -> authorize.requestMatchers("/auth/login", "/auth/register", "/").permitAll() // Allows public access to certain endpoints
+                        .requestMatchers("/auth/admin").hasAuthority("ROLE_ADMIN")
+                        .anyRequest().authenticated() // Requires authentication for all other requests
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class); // Adds the JWT authentication filter before the default username/password authentication filter
 
 
         return http.build();
     }
 
-
+    /**
+     * Configures the AuthenticationProvider, using a DaoAuthenticationProvider
+     * that uses UserDetailsService and a PasswordEncoder.
+     */
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         authenticationProvider.setUserDetailsService(userDetailsService());
@@ -54,12 +61,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         return new UserInfoService();
     }
 
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
