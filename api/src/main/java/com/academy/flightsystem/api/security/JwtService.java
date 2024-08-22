@@ -1,5 +1,6 @@
 package com.academy.flightsystem.api.security;
 
+import com.academy.flightsystem.api.service.AuthService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.io.Decoders;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,8 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.function.Function;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JwtService is responsible for generating, validating, and extracting information
@@ -19,7 +21,7 @@ import java.util.function.Function;
  */
 @Service
 public class JwtService {
-
+    private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
     @Value("${jwt.secret}")
     private String key;
     @Value("${jwt.expiration}")
@@ -27,9 +29,13 @@ public class JwtService {
 
 
     public String generateToken(String username){
-        return buildToken(username);
+        logger.info("generate Token with Username: {}", username);
+        var token = buildToken(username);
+        logger.info("generated token: {}", token);
+        return token;
     };
 
+    // check if token is generated valid
     public String buildToken(String username ){
         return Jwts.builder()
                 .subject(username)
@@ -45,11 +51,14 @@ public class JwtService {
     }
 
     public String extractUsername(String token){
-        return extractClaim(token, Claims::getSubject);
+        String username = extractClaim(token, Claims::getSubject);
+        logger.info("extracted username: {}", username);
+        return username;
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
         Claims claims = getAllClaims(token);
+        logger.info("claims: {}", claims);
         return claimsResolver.apply(claims);
     }
 

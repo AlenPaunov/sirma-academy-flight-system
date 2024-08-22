@@ -4,12 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginResponse {
     private String token;
     private Long expiresIn;
     private String username;
+    private List<String> roles;
+    private String error;
+
 
     public LoginResponse setToken(String token) {
         this.token = token;
@@ -26,15 +32,15 @@ public class LoginResponse {
         return this;
     }
 
-    public String getToken() {
-        return token;
+    public LoginResponse setRoles(List<String> roles) {
+        this.roles = roles;
+        return this;
     }
 
-    public Long getExpiresIn() {
-        return expiresIn;
+    public LoginResponse setError(String error) {
+        this.error = error;
+        return this;
     }
 
-    public String getUsername() {
-        return username;
-    }
+
 }

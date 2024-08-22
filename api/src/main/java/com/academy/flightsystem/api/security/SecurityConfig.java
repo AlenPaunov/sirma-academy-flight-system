@@ -36,8 +36,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorize -> authorize.requestMatchers("/auth/login", "/auth/register", "/").permitAll() // Allows public access to certain endpoints
-                        .requestMatchers("/auth/admin").hasAuthority("ROLE_ADMIN")
+        http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorize -> authorize.requestMatchers("/auth/**", "/").permitAll() // Allows public access to certain endpoints
+                        .requestMatchers("/auth/admin").hasRole("ADMIN")
+                        .requestMatchers("/auth/user").hasRole("USER")
                         .anyRequest().authenticated() // Requires authentication for all other requests
                 )
                 .authenticationProvider(authenticationProvider())

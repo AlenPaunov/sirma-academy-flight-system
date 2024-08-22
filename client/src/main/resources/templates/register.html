@@ -10,21 +10,24 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 <main>
     <section>
         <h1>Register</h1>
-        <form th:action="@{/register}" method="post">
+        <form th:action="@{/register}" method="post" th:object="${user}" >
             <div>
                 <label for="username">Username:</label>
-                <input type="text" id="username" th:value="${user.username}"><br/>
+                <input type="text" id="username" th:field="*{username}"><br/>
             </div>
             <div>
                 <label for="password">Password:</label>
-                <input type="password" id="password" th:value="${user.password}"><br/>
+                <input type="password" id="password" th:field="*{password}"><br/>
             </div>
             <div>
                 <button type="submit">Register</button>
+            </div>
+            <div th:if="${param.error}" class="thymeleaf-error">
+                <p th:text="${error}">Invalid username or password</p>
             </div>
             <div>
                 <a href="/login">Login</a>

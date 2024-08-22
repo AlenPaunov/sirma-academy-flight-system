@@ -14,19 +14,19 @@
 <main>
     <section class="hero">
         <div class="container">
-            <h1 class="hero-title">Welcome to the Flight System</h1>
+            <h1 class="hero-title">Welcome to the ADMIN PANEL</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum
                 vestibulum.</p>
             <button>Register now</button>
         </div>
         <div sec:authorize="isAuthenticated()">
-            <p>This content is only shown to authenticated users.</p>
-        </div>
-        <div sec:authorize="hasRole('ROLE_USER')">
-            <p>This content is only shown to users.</p>
+            This content is only shown to authenticated users.
         </div>
         <div sec:authorize="hasRole('ROLE_ADMIN')">
-            <p>This content is only shown to administrators.</p>
+            This content is only shown to administrators.
+        </div>
+        <div sec:authorize="hasRole('ROLE_USER')">
+            This content is only shown to users.
         </div>
     </section>
     <section>
